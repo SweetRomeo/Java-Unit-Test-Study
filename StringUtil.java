@@ -1,5 +1,8 @@
 package com.telusko.string.operation;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class StringUtil {
     public static char firstRepeated(String s)
     {
@@ -46,6 +49,47 @@ public class StringUtil {
 
     public static char MostRepeated(String s)
     {
-        
+        Map<Character, Integer> chars = new HashMap<>();
+
+        for (int i = s.length() - 1; 0 <= i; --i)
+        {
+            if (!chars.containsKey(s.charAt(i)))
+            {
+                chars.put(s.charAt(i), 1);
+            }
+            else
+            {
+                int count = chars.get(s.charAt(i));
+                chars.replace(s.charAt(i), ++count);
+            }
+        }
+        int repeatedMax = 0;
+        char repeatedMaxChar = 0;
+        for (int i = 0; i < s.length(); ++i)
+        {
+            if (repeatedMax < chars.get(s.charAt(i)))
+            {
+                repeatedMax = chars.get(s.charAt(i));
+                repeatedMaxChar = s.charAt(i);
+            }
+        }
+        if (repeatedMax == 1)
+        {
+            return ' ';
+        }
+        return repeatedMaxChar;
+    }
+
+    public static boolean isPangram(String text)
+    {
+        String alphabet = "abcdefghijklmnqrstuvwxyz";
+        for (int i = 0; i < alphabet.length(); ++i)
+        {
+            if (text.indexOf(Character.toLowerCase(alphabet.charAt(i))) == -1)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
